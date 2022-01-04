@@ -19,6 +19,8 @@ deck = ["" for x in range(52)]
 
 correct_sum = 0
 tests = 0
+minimum = 52
+maximum = 0
 
 def scramble():
     global deck
@@ -34,9 +36,14 @@ def scramble():
         deck[index] = card
 
 def play():
-    global correct_sum, tests
+    global correct_sum, tests, minimum, maximum
 
-    correct = card_probability.play_comp(deck)
+    correct = card_probability.play_comp_deck(deck)
+    if correct < minimum:
+        minimum = correct
+    elif correct > maximum:
+        maximum = correct
+
     correct_sum += correct
     tests += 1
 
@@ -44,4 +51,6 @@ for x in range(1000):
     scramble()
     play()
 
-print(correct_sum/tests)
+print(f"{correct_sum/tests} average correct")
+print(f"{minimum} minimum")
+print(f"{maximum} maximum")
